@@ -1,0 +1,27 @@
+name: Daily Run at 9:30 AM IST
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # 9:30 AM IST = 4:00 AM UTC
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run script
+        run: |
+          python stock_news_app.py
