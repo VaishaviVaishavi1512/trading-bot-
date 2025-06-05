@@ -19,7 +19,7 @@ stocks = {
 
 # Show stock price and chart
 end_date = datetime.datetime.now()
-start_date = end_date - datetime.timedelta(days=7)
+start_date = end_date - datetime.timedelta(days=365)
 
 for name, ticker in stocks.items():
     st.subheader(name)
