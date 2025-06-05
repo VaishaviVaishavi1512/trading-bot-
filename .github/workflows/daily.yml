@@ -1,27 +1,27 @@
-name: Daily Run at 9:30 AM IST
+name: Daily Stock News & Price Update
 
 on:
   schedule:
-    - cron: '0 4 * * *'  # 9:30 AM IST = 4:00 AM UTC
-  workflow_dispatch:
+    - cron: '00 4 * * *'  # Runs daily at 4:00 UTC, which is 9:30 AM IST (UTC+5:30)
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  run-script:
+  run-stock-news-app:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install streamlit yfinance requests beautifulsoup4 vaderSentiment
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Run script
-        run: |
-          python stock_news_app.py
+    - name: Run your stock news script
+      run: |
+        python stock_news_app.py
